@@ -6,6 +6,7 @@ import webbrowser
 class ManageAccount(QPushButton):
     def __init__(self, parent=None, url=None):
         super(ManageAccount, self).__init__(parent)
+        self.setFixedSize(104, 13)
         self.setGeometry(400, 218, 140, 18)
         self.default_icon = QIcon("assets/buttons/MANAGE_ACCT1U.png")
         self.hover_icon = QIcon("assets/buttons/MANAGE_ACCT1D.png")  # Rollover (Hover)

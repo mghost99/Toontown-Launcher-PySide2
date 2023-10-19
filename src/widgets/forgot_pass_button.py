@@ -6,6 +6,7 @@ import webbrowser
 class ForgotPassword(QPushButton):
     def __init__(self, parent=None, url=None):
         super(ForgotPassword, self).__init__(parent)
+        self.setFixedSize(104, 13)
         self.setGeometry(508, 218, 140, 18)
         self.default_icon = QIcon("assets/buttons/FORGOT1U.png")
         self.hover_icon = QIcon("assets/buttons/FORGOT1D.png")  # Rollover (Hover)

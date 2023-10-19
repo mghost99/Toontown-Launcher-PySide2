@@ -16,7 +16,6 @@ def main():
     main_window.game_launcher = game_launcher
     splash.finish(main_window)
     main_window.show()
-    splash.show()
 
     sys.exit(app.exec_())
 
