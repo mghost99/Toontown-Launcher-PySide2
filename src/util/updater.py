@@ -13,7 +13,7 @@ class Updater:
         self.base_url = base_url
         self.version_info_file = "patcher.ver"
         self.save_directory = save_directory
-        self.env_vars = ["GAME_WHITELIST_URL", "GAME_IN_GAME_NEWS_URL", "GAME_SERVER", "ACCOUNT_SERVER", "PANDA_DOWNLOAD_URL"]
+        self.env_vars = ["GAME_WHITELIST_URL", "GAME_IN_GAME_NEWS_URL", "GAME_SERVER", "ACCOUNT_SERVER", "PANDA_DOWNLOAD_URL", "PATCHER_BASE_URL_HEAVY_LIFTING"]
         self.progress_bar = progress_bar
         self.status_label = status_label
 
@@ -31,6 +31,8 @@ class Updater:
             key, sep, value = line.partition("=")
             if key in self.env_vars:
                 try:
+                    if key == "PATCHER_BASE_URL_HEAVY_LIFTING":
+                        key = "DOWNLOAD_SERVER"
                     os.environ[key] = value
                     logging.info(f"Set environment variable: {key} = {value}")
                 except OSError as e:

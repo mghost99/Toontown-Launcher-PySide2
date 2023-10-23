@@ -24,11 +24,6 @@ class GameLauncher(QObject):
         system = platform.system()
         cwd = os.getcwd()
         tt_exe = os.path.join(cwd, 'Toontown.exe')
-        os.environ['DOWNLOAD_SERVER'] = self.urls['PATCHER_BASE_URL_HEAVY_LIFTING']
-        os.environ['PANDA_DOWNLOAD_URL'] = self.urls['PANDA_DOWNLOAD_URL']
-        os.environ['GAME_WHITELIST_URL'] = self.urls['GAME_WHITELIST_URL']
-        os.environ['ACCOUNT_SERVER'] = self.urls['ACCOUNT_SERVER']
-
         if system == "Linux":
             return ["wine", tt_exe]
         elif system == "Windows":
