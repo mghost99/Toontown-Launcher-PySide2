@@ -71,12 +71,7 @@ class LauncherWorker(QObject):
 
         cmd = None
         if system == "Linux":
-            compatdata_cwd = os.getcwd() + "/compatdata"
-            proton_path = os.path.expanduser('~/.steam/steam/steamapps/common/Proton - Experimental/proton')
-            os.environ['STEAM_COMPAT_DATA_PATH'] = compatdata_cwd
-            os.environ['STEAM_COMPAT_CLIENT_INSTALL_PATH'] = os.path.expanduser('~/.steam/root/')
-            os.environ['PROTON_USE_D9VK'] = "1"
-            cmd = [proton_path, "run", tt_exe]
+            cmd = ["wine", tt_exe]
         elif system == "Windows":
             cmd = tt_exe
         elif system == "Darwin":
