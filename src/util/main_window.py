@@ -37,7 +37,7 @@ class MainWindow(QMainWindow):
         mask_pixmap = QPixmap.fromImage(mask_image)
         self.setMask(mask_pixmap.mask())
         self.load_theme(self)
-        self.setup_buttons()
+        self.setup_widgets()
         self.setup_login_area()
         self.m_drag = False
         self.m_DragPosition = QPoint()
@@ -68,7 +68,7 @@ class MainWindow(QMainWindow):
         with open(os.path.join("themes", theme_file), "r") as file:
             self.theme_data = json.load(file)
 
-    def setup_buttons(self):
+    def setup_widgets(self):
         self.button_url_keys = {
             "ReportBug": "BUTTON_6",
             "Homepage": "BUTTON_4",
