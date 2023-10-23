@@ -1,0 +1,271 @@
+{
+    "elements": {
+        "CreateAccount": {
+            "type": "QPushButton",
+            "visible": true,
+            "size": {
+                "width": 104,
+                "height": 13
+            },
+            "position": {
+                "x": 628,
+                "y": 217
+            },
+            "icons": {
+                "default": "assets/buttons/CREATEPW1U.png",
+                "hover": "assets/buttons/CREATEPW1D.png",
+                "pressed": "assets/buttons/CREATEPW1D.png"
+            }
+        },
+        "ForgotPassword": {
+            "type": "QPushButton",
+            "visible": true,
+            "size": {
+                "width": 104,
+                "height": 13
+            },
+            "position": {
+                "x": 508,
+                "y": 218
+            },
+            "icons": {
+                "default": "assets/buttons/FORGOT1U.png",
+                "hover": "assets/buttons/FORGOT1D.png",
+                "pressed": "assets/buttons/FORGOT1D.png"
+            }
+        },
+        "GameNews": {
+            "type": "QWebEngineView",
+            "visible": true,
+            "size": {
+                "width": 315,
+                "height": 350
+            },
+            "position": {
+                "x": 35,
+                "y": 75
+            },
+            "url": "URL_TO_BE_DEFINED"
+        },
+        "GraphicOptions": {
+            "type": "QPushButton",
+            "visible": true,
+            "size": {
+                "width": 122,
+                "height": 38
+            },
+            "position": {
+                "x": 499,
+                "y": 460
+            },
+            "icons": {
+                "default": "assets/buttons/GRAPHICSOPTIONS1U.png",
+                "hover": "assets/buttons/GRAPHICSOPTIONS1R.png",
+                "pressed": "assets/buttons/GRAPHICSOPTIONS1D.png",
+                "disabled": "assets/buttons/GRAPHICSOPTIONS1G.png"
+            }
+        },
+        "Homepage": {
+            "type": "QPushButton",
+            "visible": true,
+            "size": {
+                "width": 122,
+                "height": 38
+            },
+            "position": {
+                "x": 253,
+                "y": 460
+            },
+            "icons": {
+                "default": "assets/buttons/HOMEPAGE1U.png",
+                "hover": "assets/buttons/HOMEPAGE1R.png",
+                "pressed": "assets/buttons/HOMEPAGE1D.png",
+                "disabled": "assets/buttons/HOMEPAGE1G.png"
+            }
+        },
+        "LoginPrompt": {
+            "type": "QLabel",
+            "visible": true,
+            "size": {
+                "width": 98,
+                "height": 52
+            },
+            "position": {
+                "x": 400,
+                "y": 165
+            },
+            "icons": {
+                "default": "assets/LIPROMPT.png"
+            }
+        },
+        "ManageAccount": {
+            "type": "QPushButton",
+            "visible": true,
+            "size": {
+                "width": 104,
+                "height": 13
+            },
+            "position": {
+                "x": 400,
+                "y": 218
+            },
+            "icons": {
+                "default": "assets/buttons/MANAGE_ACCT1U.png",
+                "hover": "assets/buttons/MANAGE_ACCT1D.png",
+                "pressed": "assets/buttons/MANAGE_ACCT1D.png"
+            }
+        },
+        "PassInput": {
+            "type": "QLineEdit",
+            "visible": true,
+            "placeholder": "Password",
+            "password": true,
+            "size": {
+                "width": 140,
+                "height": 18
+            },
+            "position": {
+                "x": 499,
+                "y": 195
+            }
+        },
+        "Play": {
+            "type": "QPushButton",
+            "visible": true,
+            "size": {
+                "width": 85,
+                "height": 36
+            },
+            "position": {
+                "x": 653,
+                "y": 170
+            },
+            "icons": {
+                "default": "assets/buttons/PLAY1U.png",
+                "hover": "assets/buttons/PLAY1R.png",
+                "pressed": "assets/buttons/PLAY1D.png",
+                "disabled": "assets/buttons/PLAY1G.png"
+            }
+        },
+        "PlayersGuide": {
+            "type": "QPushButton",
+            "visible": true,
+            "size": {
+                "width": 122,
+                "height": 38
+            },
+            "position": {
+                "x": 132,
+                "y": 460
+            },
+            "icons": {
+                "default": "assets/buttons/FAQ1U.png",
+                "hover": "assets/buttons/FAQ1R.png",
+                "pressed": "assets/buttons/FAQ1D.png",
+                "disabled": "assets/buttons/FAQ1G.png"
+            }
+        },
+        "Quit": {
+            "type": "QPushButton",
+            "visible": true,
+            "size": {
+                "width": 122,
+                "height": 38
+            },
+            "position": {
+                "x": 620,
+                "y": 460
+            },
+            "icons": {
+                "default": "assets/buttons/QUIT1U.png",
+                "hover": "assets/buttons/QUIT1R.png",
+                "pressed": "assets/buttons/QUIT1D.png",
+                "disabled": "assets/buttons/QUIT1G.png"
+            }
+        },
+        "ReportBug": {
+            "type": "QPushButton",
+            "visible": true,
+            "size": {
+                "width": 122,
+                "height": 38
+            },
+            "position": {
+                "x": 10,
+                "y": 460
+            },
+            "icons": {
+                "default": "assets/buttons/REPORTBUG1U.png",
+                "hover": "assets/buttons/REPORTBUG1R.png",
+                "pressed": "assets/buttons/REPORTBUG1D.png",
+                "disabled": "assets/buttons/REPORTBUG1G.png"
+            }
+        },
+        "TMin": {
+            "type": "QPushButton",
+            "visible": true,
+            "size": {
+                "width": 19,
+                "height": 19
+            },
+            "position": {
+                "x": 685,
+                "y": 1
+            },
+            "icons": {
+                "default": "assets/buttons/TMIN1U.png",
+                "hover": "assets/buttons/TMIN1D.png",
+                "pressed": "assets/buttons/TMIN1D.png"
+            }
+        },
+        "TQuit": {
+            "type": "QPushButton",
+            "visible": true,
+            "size": {
+                "width": 19,
+                "height": 19
+            },
+            "position": {
+                "x": 710,
+                "y": 1
+            },
+            "icons": {
+                "default": "assets/buttons/TQUIT1U.png",
+                "hover": "assets/buttons/TQUIT1D.png",
+                "pressed": "assets/buttons/TQUIT1D.png"
+            }
+        },
+        "TopToons": {
+            "type": "QPushButton",
+            "visible": true,
+            "size": {
+                "width": 122,
+                "height": 38
+            },
+            "position": {
+                "x": 378,
+                "y": 460
+            },
+            "icons": {
+                "default": "assets/buttons/COMMUNITY1U.png",
+                "hover": "assets/buttons/COMMUNITY1R.png",
+                "pressed": "assets/buttons/COMMUNITY1D.png",
+                "disabled": "assets/buttons/COMMUNITY1G.png"
+            }
+        },
+        "UserInput": {
+            "type": "QLineEdit",
+            "visible": true,
+            "placeholder": "Username",
+            "password": false,
+            "size": {
+                "width": 140,
+                "height": 18
+            },
+            "position": {
+                "x": 499,
+                "y": 172
+            }
+        }
+    }
+}
