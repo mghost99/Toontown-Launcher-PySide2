@@ -22,3 +22,8 @@ zlib.pyd
 *.pyd
 *.pre
 assets/old/images/.*
+news/*
+sign/*
+errorCode
+*.log
+*.dat
