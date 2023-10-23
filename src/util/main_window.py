@@ -1,3 +1,5 @@
+import platform
+import subprocess
 from PyQt5.QtWidgets import (
     QMainWindow, QLabel, QProgressBar,
     QDesktopWidget
@@ -104,11 +106,18 @@ class MainWindow(QMainWindow):
         self.progress_bar.setVisible(False)
 
     def restore_window(self):
-        print("linux bug: we know we are minimized but we can do nothing to restore!!??")
-        if self.windowState() == Qt.WindowMinimized:
-            self.showMinimized()
-            self.show()
-        
+        system = platform.system()
+        window_title = "Toontown Launcher"
+        if system == "Linux":
+            try:
+                subprocess.run(["wmctrl", "-a", window_title])
+            except Exception as e:
+                print(f"An error occurred while trying to restore the window: {e}")
+        else:
+            def restore_action():
+                self.showNormal()
+                self.activateWindow()
+                self.raise_()
 
     def info_text(self, message, is_error=False):
         if is_error:
