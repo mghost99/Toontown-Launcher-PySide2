@@ -16,6 +16,7 @@ from src.widgets import (
 
 import os
 
+
 class MainWindow(QMainWindow):
     def __init__(self, launcher_urls, game_launcher, authenticator):
         super().__init__()
@@ -74,10 +75,14 @@ class MainWindow(QMainWindow):
         self.tmin_button.clicked.connect(self.showMinimized)
 
     def setup_bottom_buttons(self):
-        self.report_bug = ReportBug(self, url=self.urls.get('BUTTON_6', 'http://example.com'))
-        self.homepage = Homepage(self, url=self.urls.get('BUTTON_4', 'http://example.com'))
-        self.players_guide = PlayersGuide(self, url=self.urls.get('BUTTON_3', 'http://example.com'))
-        self.top_toons = TopToons(self, url=self.urls.get('BUTTON_2', 'http://example.com'))
+        self.report_bug = ReportBug(
+            self, url=self.urls.get('BUTTON_6', 'http://example.com'))
+        self.homepage = Homepage(self, url=self.urls.get(
+            'BUTTON_4', 'http://example.com'))
+        self.players_guide = PlayersGuide(
+            self, url=self.urls.get('BUTTON_3', 'http://example.com'))
+        self.top_toons = TopToons(self, url=self.urls.get(
+            'BUTTON_2', 'http://example.com'))
         self.graphic_options = GraphicOptions(self)
         self.quit_button = Quit(self)
 
@@ -97,11 +102,15 @@ class MainWindow(QMainWindow):
         self.username_input.setFont(self.input_font)
         self.password_input = PassInput(self)
         self.password_input.setFont(self.input_font)
-        self.forgot_password = ForgotPassword(self, url=self.urls.get('BUTTON_7', 'http://example.com'))
-        self.manage_account = ManageAccount(self, url=self.urls.get('BUTTON_5', 'http://example.com'))
-        self.create_account = CreateAccount(self, url=self.urls.get('BUTTON_1', 'http://example.com'))
+        self.forgot_password = ForgotPassword(
+            self, url=self.urls.get('BUTTON_7', 'http://example.com'))
+        self.manage_account = ManageAccount(
+            self, url=self.urls.get('BUTTON_5', 'http://example.com'))
+        self.create_account = CreateAccount(
+            self, url=self.urls.get('BUTTON_1', 'http://example.com'))
         self.play_button = Play(self.on_play_button_clicked, self)
-        self.game_news = GameNews(self, url=self.urls.get('GLOBAL_URL_1', 'http://example.com'))
+        self.game_news = GameNews(self, url=self.urls.get(
+            'GLOBAL_URL_1', 'http://example.com'))
         self.progress_bar = QProgressBar(self)
         self.progress_bar.setGeometry(499, 182, 140, 20)
         self.progress_bar.setVisible(False)
@@ -112,14 +121,16 @@ class MainWindow(QMainWindow):
             try:
                 subprocess.run(["wmctrl", "-a", self.winTitle])
             except Exception as e:
-                print(f"An error occurred while trying to restore the window: {e}")
+                print(
+                    f"An error occurred while trying to restore the window: {e}")
         self.showNormal()
         self.activateWindow()
         self.raise_()
 
     def info_text(self, message, is_error=False):
         if is_error:
-            self.info_label.setText(f'<html><head/><body><p style="color:red;">{message}</p></body></html>')
+            self.info_label.setText(
+                f'<html><head/><body><p style="color:red;">{message}</p></body></html>')
         else:
             self.info_label.setText(message)
 
@@ -156,7 +167,8 @@ class MainWindow(QMainWindow):
         self.hide_progress_bar()
 
     def run_updater(self):
-        self.updater = Updater(self.urls['BASE_URL'], progress_bar=self.progress_bar, status_label=self.info_label)
+        self.updater = Updater(
+            self.urls['BASE_URL'], progress_bar=self.progress_bar, status_label=self.info_label)
         self.updater.update()
         self.game_launcher.game_closed_signal.connect(self.restore_window)
 
@@ -181,8 +193,9 @@ class MainWindow(QMainWindow):
         self.authenticator.urls = self.urls  # Update urls
         self.authenticator.username = username  # Update username
         self.authenticator.password = password  # Update password
-        
-        self.authenticator.authentication_signal.connect(self.handle_authentication)
+
+        self.authenticator.authentication_signal.connect(
+            self.handle_authentication)
         self.authenticator.start()  # This will trigger the run method in Authenticator
 
         self.info_text("Authenticating...")

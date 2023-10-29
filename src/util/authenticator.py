@@ -1,6 +1,7 @@
 from PyQt5.QtCore import QThread, pyqtSignal
 import requests
 
+
 class Authenticator(QThread):
     progress_signal = pyqtSignal(int)
     authentication_signal = pyqtSignal(dict)
@@ -12,7 +13,8 @@ class Authenticator(QThread):
         self.password = password
 
     def run(self):
-        endpoint = "https://sunrise.games/api/login/alt/" #self.urls['WEB_PAGE_LOGIN_RPC']
+        # self.urls['WEB_PAGE_LOGIN_RPC']
+        endpoint = "https://sunrise.games/api/login/alt/"
         data = {
             'username': self.username,
             'password': self.password,
@@ -22,5 +24,6 @@ class Authenticator(QThread):
             'User-Agent': 'PyQt5 - Disney\'s Toontown Online Launcher'
         }
 
-        request = requests.post(endpoint, data=data, headers=webHeaders, timeout=10).json()
+        request = requests.post(endpoint, data=data,
+                                headers=webHeaders, timeout=10).json()
         self.authentication_signal.emit(request)

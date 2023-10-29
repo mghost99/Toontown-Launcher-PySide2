@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QApplication, QSplashScreen, QProgressBar, QLabel, Q
 import urllib
 import requests
 
+
 class SplashScreen(QSplashScreen):
     def __init__(self):
         super().__init__(QPixmap("assets/backgrounds/SPLASH.png"))
@@ -35,20 +36,20 @@ class SplashScreen(QSplashScreen):
         default_url = "http://download.sunrise.games/launcher/"
         base_url = default_url
         variables_to_extract = [
-        "PATCHER_VERSION_STRING_SERVER",
-        "PATCHER_VERSION_STRING_SERVER_OSK",
-        "GAME_VERSION_TEXT",
-        "DOWNLOAD_PATCHER_CURRENT_VERSION",
-        "DOWNLOAD_PATCHER_CURRENT_VERSION_OSX",
-        "GAME_WHITELIST_URL",
-        "GAME_IN_GAME_NEWS_URL",
-        "GAME_SERVER",
-        "ADDITIONAL_VERSION_TEXT",
-        "ACCOUNT_SERVER",
-        "PANDA_DOWNLOAD_URL",
-        "PATCHER_BASE_URL_HEAVY_LIFTING",
-        "WEB_PAGE_LOGIN_RPC"
-    ]
+            "PATCHER_VERSION_STRING_SERVER",
+            "PATCHER_VERSION_STRING_SERVER_OSX",
+            "GAME_VERSION_TEXT",
+            "DOWNLOAD_PATCHER_CURRENT_VERSION",
+            "DOWNLOAD_PATCHER_CURRENT_VERSION_OSX",
+            "GAME_WHITELIST_URL",
+            "GAME_IN_GAME_NEWS_URL",
+            "GAME_SERVER",
+            "ADDITIONAL_VERSION_TEXT",
+            "ACCOUNT_SERVER",
+            "PANDA_DOWNLOAD_URL",
+            "PATCHER_BASE_URL_HEAVY_LIFTING",
+            "WEB_PAGE_LOGIN_RPC"
+        ]
         try:
             with open('parameters.txt', 'r') as file:
                 lines = file.readlines()

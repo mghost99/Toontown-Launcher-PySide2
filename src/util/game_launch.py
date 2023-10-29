@@ -4,6 +4,7 @@ import subprocess
 import time
 from PyQt5.QtCore import QObject, pyqtSignal
 
+
 class GameLauncher(QObject):
     game_exit_signal = pyqtSignal(int, str)
     game_closed_signal = pyqtSignal()
