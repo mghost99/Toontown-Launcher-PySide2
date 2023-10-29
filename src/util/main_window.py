@@ -22,7 +22,8 @@ class MainWindow(QMainWindow):
         self.urls = launcher_urls if launcher_urls else {}
         self.game_launcher = game_launcher
         self.authenticator = authenticator
-        self.setWindowTitle('Toontown Launcher')
+        self.winTitle = "Toontown Launcher"
+        self.setWindowTitle(self.winTitle)
         self.setGeometry(100, 100, 750, 500)
         self.setFixedSize(750, 500)
         self.setWindowFlags(Qt.FramelessWindowHint)
@@ -107,17 +108,14 @@ class MainWindow(QMainWindow):
 
     def restore_window(self):
         system = platform.system()
-        window_title = "Toontown Launcher"
         if system == "Linux":
             try:
-                subprocess.run(["wmctrl", "-a", window_title])
+                subprocess.run(["wmctrl", "-a", self.winTitle])
             except Exception as e:
                 print(f"An error occurred while trying to restore the window: {e}")
-        else:
-            def restore_action():
-                self.showNormal()
-                self.activateWindow()
-                self.raise_()
+        self.showNormal()
+        self.activateWindow()
+        self.raise_()
 
     def info_text(self, message, is_error=False):
         if is_error:
