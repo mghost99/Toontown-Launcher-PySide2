@@ -1,9 +1,14 @@
 
 import sys
+import os
 from PyQt5.QtWidgets import QApplication
+from PyQt5.QtCore import Qt
 from src.util import SplashScreen, Authenticator, GameLauncher, MainWindow
 
 def main():
+    os.environ["QT_SCALE_FACTOR"] = str(1)
+    QApplication.setAttribute(Qt.AA_DisableHighDpiScaling)
+
     app = QApplication(sys.argv)
 
     splash = SplashScreen()
