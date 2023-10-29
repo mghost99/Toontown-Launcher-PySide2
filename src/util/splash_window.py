@@ -6,8 +6,8 @@ import requests
 
 class SplashScreen(QSplashScreen):
     def __init__(self):
-        super().__init__(QPixmap("assets/backgrounds/SPLASH.png"))
-        qmask = QPixmap("assets/masks/SPLASH.png")
+        super().__init__(QPixmap("assets/default/backgrounds/SPLASH.png"))
+        qmask = QPixmap("assets/default/masks/SPLASH.png")
         self.setMask(qmask.mask())
         self.progressBar = QProgressBar(self)
         self.progressBar.setGeometry(130, 200, 250, 25)

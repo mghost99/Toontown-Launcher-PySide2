@@ -1,0 +1,218 @@
+{
+    "elements": {
+        "CreateAccount": {
+            "type": "QPushButton",
+            "size": {
+                "width": 104,
+                "height": 13
+            },
+            "position": {
+                "x": 580,
+                "y": 217
+            },
+            "icons": {
+                "default": "assets/old/buttons/CREATEPW1U.jpg",
+                "hover": "assets/old/buttons/CREATEPW1D.jpg",
+                "pressed": "assets/old/buttons/CREATEPW1D.jpg"
+            }
+        },
+        "ForgotPassword": {
+            "type": "QPushButton",
+
+            "size": {
+                "width": 104,
+                "height": 13
+            },
+            "position": {
+                "x": 455,
+                "y": 218
+            },
+            "icons": {
+                "default": "assets/old/buttons/FORGOT1U.jpg",
+                "hover": "assets/old/buttons/FORGOT1D.jpg",
+                "pressed": "assets/old/buttons/FORGOT1D.jpg"
+            }
+        },
+        "GameNews": {
+            "type": "QWebEngineView",
+
+            "size": {
+                "width": 315,
+                "height": 350
+            },
+            "position": {
+                "x": 35,
+                "y": 75
+            },
+            "url": "URL_TO_BE_DEFINED"
+        },
+        "Homepage": {
+            "type": "QPushButton",
+
+            "size": {
+                "width": 122,
+                "height": 38
+            },
+            "position": {
+                "x": 252,
+                "y": 461
+            },
+            "icons": {
+                "default": "assets/old/buttons/HOMEPAGE1U.jpg",
+                "hover": "assets/old/buttons/HOMEPAGE1R.jpg",
+                "pressed": "assets/old/buttons/HOMEPAGE1D.jpg",
+                "disabled": "assets/old/buttons/HOMEPAGE1G.jpg"
+            }
+        },
+        "LoginPrompt": {
+            "type": "QLabel",
+
+            "size": {
+                "width": 98,
+                "height": 52
+            },
+            "position": {
+                "x": 400,
+                "y": 165
+            },
+            "icons": {
+                "default": "assets/old/backgrounds/LIPROMPT.jpg"
+            }
+        },
+        "ManageAccount": {
+            "type": "QPushButton",
+            "size": {
+                "width": 122,
+                "height": 38
+            },
+            "position": {
+                "x": 499,
+                "y": 461
+            },
+            "icons": {
+                "default": "assets/old/buttons/MANAGEACCOUNT1U.jpg",
+                "hover": "assets/old/buttons/MANAGEACCOUNT1R.jpg",
+                "pressed": "assets/old/buttons/MANAGEACCOUNT1D.jpg",
+                "disabled": "assets/old/buttons/MANAGEACCOUNT1G.jpg"
+            }
+        },
+        "PassInput": {
+            "type": "QLineEdit",
+
+            "placeholder": "Password",
+            "password": true,
+            "size": {
+                "width": 140,
+                "height": 18
+            },
+            "position": {
+                "x": 499,
+                "y": 195
+            }
+        },
+        "Play": {
+            "type": "QPushButton",
+
+            "size": {
+                "width": 85,
+                "height": 36
+            },
+            "position": {
+                "x": 653,
+                "y": 170
+            },
+            "icons": {
+                "default": "assets/old/buttons/PLAY1U.jpg",
+                "hover": "assets/old/buttons/PLAY1R.jpg",
+                "pressed": "assets/old/buttons/PLAY1D.jpg",
+                "disabled": "assets/old/buttons/PLAY1G.jpg"
+            }
+        },
+        "PlayersGuide": {
+            "type": "QPushButton",
+
+            "size": {
+                "width": 122,
+                "height": 39
+            },
+            "position": {
+                "x": 130,
+                "y": 461
+            },
+            "icons": {
+                "default": "assets/old/buttons/FAQ1U.jpg",
+                "hover": "assets/old/buttons/FAQ1R.jpg",
+                "pressed": "assets/old/buttons/FAQ1D.jpg",
+                "disabled": "assets/old/buttons/FAQ1G.jpg"
+            }
+        },
+        "Quit": {
+            "type": "QPushButton",
+
+            "size": {
+                "width": 122,
+                "height": 38
+            },
+            "position": {
+                "x": 623,
+                "y": 461
+            },
+            "icons": {
+                "default": "assets/old/buttons/QUIT1U.jpg",
+                "hover": "assets/old/buttons/QUIT1R.jpg",
+                "pressed": "assets/old/buttons/QUIT1D.jpg",
+                "disabled": "assets/old/buttons/QUIT1G.jpg"
+            }
+        },
+        "ReportBug": {
+            "type": "QPushButton",
+
+            "size": {
+                "width": 122,
+                "height": 38
+            },
+            "position": {
+                "x": 5,
+                "y": 461
+            },
+            "icons": {
+                "default": "assets/old/buttons/REPORTBUG1U.jpg",
+                "hover": "assets/old/buttons/REPORTBUG1R.jpg",
+                "pressed": "assets/old/buttons/REPORTBUG1D.jpg",
+                "disabled": "assets/old/buttons/REPORTBUG1G.jpg"
+            }
+        },
+        "TopToons": {
+            "type": "QPushButton",
+
+            "size": {
+                "width": 122,
+                "height": 38
+            },
+            "position": {
+                "x": 375,
+                "y": 461
+            },
+            "icons": {
+                "default": "assets/old/buttons/COMMUNITY1U.jpg",
+                "hover": "assets/old/buttons/COMMUNITY1R.jpg",
+                "pressed": "assets/old/buttons/COMMUNITY1D.jpg",
+                "disabled": "assets/old/buttons/COMMUNITY1G.jpg"
+            }
+        },
+        "UserInput": {
+            "type": "QLineEdit",
+
+            "placeholder": "Username",
+            "password": false,
+            "size": {
+                "width": 140,
+                "height": 18
+            },
+            "position": {
+                "x": 499,
+                "y": 172
+            }
+        }
+    }
+}

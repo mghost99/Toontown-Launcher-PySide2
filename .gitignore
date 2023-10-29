@@ -16,9 +16,16 @@ zlib.pyd
 *.dll
 *.mf
 *.dc
-*.txt
+*.log
 *.asi
 *.manifest
 *.pyd
 *.pre
 assets/old/images/.*
+news/*
+phase_1_index.txt
+errorCode
+phase_2_index.txt
+readlog.txt
+sign/texture.jpg
+whitelist/twhitelist.dat

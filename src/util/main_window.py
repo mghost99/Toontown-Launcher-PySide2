@@ -16,26 +16,13 @@ class MainWindow(QMainWindow):
     def __init__(self, launcher_urls, game_launcher, authenticator):
         super().__init__()
         self.theme_data = {}
+        self.is_old = False
         self.urls = launcher_urls if launcher_urls else {}
         self.game_launcher = game_launcher
         self.authenticator = authenticator
         self.setWindowTitle('Toontown Launcher')
         self.setGeometry(100, 100, 750, 500)
         self.setFixedSize(750, 500)
-        self.setWindowFlags(Qt.FramelessWindowHint)
-        self.background = QLabel(self)
-        pixmap = QPixmap("assets/backgrounds/BACKGROUND1.png")
-        self.background.setPixmap(pixmap)
-        self.background.resize(750, 500)
-        mask_pixmap = QPixmap("assets/masks/BACKGROUNDMASK.png")
-        mask_image = mask_pixmap.toImage()
-        for x in range(mask_image.width()):
-            for y in range(mask_image.height()):
-                color = QColor(mask_image.pixel(x, y))
-                if color == Qt.white:
-                    mask_image.setPixelColor(x, y, Qt.transparent)
-        mask_pixmap = QPixmap.fromImage(mask_image)
-        self.setMask(mask_pixmap.mask())
         self.load_theme(self)
         self.setup_widgets()
         self.setup_login_area()
@@ -63,10 +50,32 @@ class MainWindow(QMainWindow):
     def mouseReleaseEvent(self, QMouseEvent):
         self.m_drag = False
 
+    def setup_background(self):
+        self.background = QLabel(self)
+        if self.is_old:
+            pixmap = QPixmap("assets/old/backgrounds/BACKGROUND1.jpg")
+        else:
+            self.setWindowFlags(Qt.FramelessWindowHint)
+            pixmap = QPixmap("assets/default/backgrounds/BACKGROUND1.png")
+            mask_pixmap = QPixmap("assets/default/masks/BACKGROUNDMASK.png")
+            mask_image = mask_pixmap.toImage()
+            for x in range(mask_image.width()):
+                for y in range(mask_image.height()):
+                    color = QColor(mask_image.pixel(x, y))
+                    if color == Qt.white:
+                        mask_image.setPixelColor(x, y, Qt.transparent)
+            mask_pixmap = QPixmap.fromImage(mask_image)
+            self.setMask(mask_pixmap.mask())
+        self.background.setPixmap(pixmap)
+        self.background.resize(750, 500)
+
     @staticmethod
-    def load_theme(self, theme_file="default-theme.json"):
+    def load_theme(self, theme_file="old-theme.json"):
+        if theme_file == "old-theme.json":
+            self.is_old = True
         with open(os.path.join("themes", theme_file), "r") as file:
             self.theme_data = json.load(file)
+        self.setup_background()
 
     def setup_widgets(self):
         self.button_url_keys = {
@@ -117,8 +126,9 @@ class MainWindow(QMainWindow):
                     webview.url = self.urls[url_key]
                     webview.load(QUrl(webview.url))
         # Disable GraphicOptions
-        self.get_button("GraphicOptions").set_disabled(True)
-        self.get_button("GraphicOptions").setIcon(QIcon("assets/buttons/GRAPHICSOPTIONS1G.png"))
+        if self.get_button("GraphicOptions"):
+            self.get_button("GraphicOptions").set_disabled(True)
+            self.get_button("GraphicOptions").setIcon(QIcon("assets/default/buttons/GRAPHICSOPTIONS1G.png"))
 
 
     def open_url(self, url):

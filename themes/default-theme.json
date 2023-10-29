@@ -12,9 +12,9 @@
                 "y": 217
             },
             "icons": {
-                "default": "assets/buttons/CREATEPW1U.png",
-                "hover": "assets/buttons/CREATEPW1D.png",
-                "pressed": "assets/buttons/CREATEPW1D.png"
+                "default": "assets/default/buttons/CREATEPW1U.png",
+                "hover": "assets/default/buttons/CREATEPW1D.png",
+                "pressed": "assets/default/buttons/CREATEPW1D.png"
             }
         },
         "ForgotPassword": {
@@ -29,9 +29,9 @@
                 "y": 218
             },
             "icons": {
-                "default": "assets/buttons/FORGOT1U.png",
-                "hover": "assets/buttons/FORGOT1D.png",
-                "pressed": "assets/buttons/FORGOT1D.png"
+                "default": "assets/default/buttons/FORGOT1U.png",
+                "hover": "assets/default/buttons/FORGOT1D.png",
+                "pressed": "assets/default/buttons/FORGOT1D.png"
             }
         },
         "GameNews": {
@@ -59,10 +59,10 @@
                 "y": 460
             },
             "icons": {
-                "default": "assets/buttons/GRAPHICSOPTIONS1U.png",
-                "hover": "assets/buttons/GRAPHICSOPTIONS1R.png",
-                "pressed": "assets/buttons/GRAPHICSOPTIONS1D.png",
-                "disabled": "assets/buttons/GRAPHICSOPTIONS1G.png"
+                "default": "assets/default/buttons/GRAPHICSOPTIONS1U.png",
+                "hover": "assets/default/buttons/GRAPHICSOPTIONS1R.png",
+                "pressed": "assets/default/buttons/GRAPHICSOPTIONS1D.png",
+                "disabled": "assets/default/buttons/GRAPHICSOPTIONS1G.png"
             }
         },
         "Homepage": {
@@ -77,10 +77,10 @@
                 "y": 460
             },
             "icons": {
-                "default": "assets/buttons/HOMEPAGE1U.png",
-                "hover": "assets/buttons/HOMEPAGE1R.png",
-                "pressed": "assets/buttons/HOMEPAGE1D.png",
-                "disabled": "assets/buttons/HOMEPAGE1G.png"
+                "default": "assets/default/buttons/HOMEPAGE1U.png",
+                "hover": "assets/default/buttons/HOMEPAGE1R.png",
+                "pressed": "assets/default/buttons/HOMEPAGE1D.png",
+                "disabled": "assets/default/buttons/HOMEPAGE1G.png"
             }
         },
         "LoginPrompt": {
@@ -95,7 +95,7 @@
                 "y": 165
             },
             "icons": {
-                "default": "assets/LIPROMPT.png"
+                "default": "assets/default/LIPROMPT.png"
             }
         },
         "ManageAccount": {
@@ -110,9 +110,9 @@
                 "y": 218
             },
             "icons": {
-                "default": "assets/buttons/MANAGE_ACCT1U.png",
-                "hover": "assets/buttons/MANAGE_ACCT1D.png",
-                "pressed": "assets/buttons/MANAGE_ACCT1D.png"
+                "default": "assets/default/buttons/MANAGE_ACCT1U.png",
+                "hover": "assets/default/buttons/MANAGE_ACCT1D.png",
+                "pressed": "assets/default/buttons/MANAGE_ACCT1D.png"
             }
         },
         "PassInput": {
@@ -141,10 +141,10 @@
                 "y": 170
             },
             "icons": {
-                "default": "assets/buttons/PLAY1U.png",
-                "hover": "assets/buttons/PLAY1R.png",
-                "pressed": "assets/buttons/PLAY1D.png",
-                "disabled": "assets/buttons/PLAY1G.png"
+                "default": "assets/default/buttons/PLAY1U.png",
+                "hover": "assets/default/buttons/PLAY1R.png",
+                "pressed": "assets/default/buttons/PLAY1D.png",
+                "disabled": "assets/default/buttons/PLAY1G.png"
             }
         },
         "PlayersGuide": {
@@ -159,10 +159,10 @@
                 "y": 460
             },
             "icons": {
-                "default": "assets/buttons/FAQ1U.png",
-                "hover": "assets/buttons/FAQ1R.png",
-                "pressed": "assets/buttons/FAQ1D.png",
-                "disabled": "assets/buttons/FAQ1G.png"
+                "default": "assets/default/buttons/FAQ1U.png",
+                "hover": "assets/default/buttons/FAQ1R.png",
+                "pressed": "assets/default/buttons/FAQ1D.png",
+                "disabled": "assets/default/buttons/FAQ1G.png"
             }
         },
         "Quit": {
@@ -177,10 +177,10 @@
                 "y": 460
             },
             "icons": {
-                "default": "assets/buttons/QUIT1U.png",
-                "hover": "assets/buttons/QUIT1R.png",
-                "pressed": "assets/buttons/QUIT1D.png",
-                "disabled": "assets/buttons/QUIT1G.png"
+                "default": "assets/default/buttons/QUIT1U.png",
+                "hover": "assets/default/buttons/QUIT1R.png",
+                "pressed": "assets/default/buttons/QUIT1D.png",
+                "disabled": "assets/default/buttons/QUIT1G.png"
             }
         },
         "ReportBug": {
@@ -195,10 +195,10 @@
                 "y": 460
             },
             "icons": {
-                "default": "assets/buttons/REPORTBUG1U.png",
-                "hover": "assets/buttons/REPORTBUG1R.png",
-                "pressed": "assets/buttons/REPORTBUG1D.png",
-                "disabled": "assets/buttons/REPORTBUG1G.png"
+                "default": "assets/default/buttons/REPORTBUG1U.png",
+                "hover": "assets/default/buttons/REPORTBUG1R.png",
+                "pressed": "assets/default/buttons/REPORTBUG1D.png",
+                "disabled": "assets/default/buttons/REPORTBUG1G.png"
             }
         },
         "TMin": {
@@ -213,9 +213,9 @@
                 "y": 1
             },
             "icons": {
-                "default": "assets/buttons/TMIN1U.png",
-                "hover": "assets/buttons/TMIN1D.png",
-                "pressed": "assets/buttons/TMIN1D.png"
+                "default": "assets/default/buttons/TMIN1U.png",
+                "hover": "assets/default/buttons/TMIN1D.png",
+                "pressed": "assets/default/buttons/TMIN1D.png"
             }
         },
         "TQuit": {
@@ -230,9 +230,9 @@
                 "y": 1
             },
             "icons": {
-                "default": "assets/buttons/TQUIT1U.png",
-                "hover": "assets/buttons/TQUIT1D.png",
-                "pressed": "assets/buttons/TQUIT1D.png"
+                "default": "assets/default/buttons/TQUIT1U.png",
+                "hover": "assets/default/buttons/TQUIT1D.png",
+                "pressed": "assets/default/buttons/TQUIT1D.png"
             }
         },
         "TopToons": {
@@ -247,10 +247,10 @@
                 "y": 460
             },
             "icons": {
-                "default": "assets/buttons/COMMUNITY1U.png",
-                "hover": "assets/buttons/COMMUNITY1R.png",
-                "pressed": "assets/buttons/COMMUNITY1D.png",
-                "disabled": "assets/buttons/COMMUNITY1G.png"
+                "default": "assets/default/buttons/COMMUNITY1U.png",
+                "hover": "assets/default/buttons/COMMUNITY1R.png",
+                "pressed": "assets/default/buttons/COMMUNITY1D.png",
+                "disabled": "assets/default/buttons/COMMUNITY1G.png"
             }
         },
         "UserInput": {
