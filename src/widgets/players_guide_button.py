@@ -20,8 +20,7 @@ class PlayersGuide(QPushButton):
         self.default_icon = QIcon("assets/buttons/FAQ1U.png")
         self.hover_icon = QIcon("assets/buttons/FAQ1R.png")  # Rollover (Hover)
         self.pressed_icon = QIcon("assets/buttons/FAQ1D.png")  # Down
-        self.disabled_icon = QIcon(
-            "assets/buttons/FAQ1G.png")  # Disabled (Greyed)
+        self.disabled_icon = QIcon("assets/buttons/FAQ1G.png")  # Disabled (Greyed)
 
         # Setting the icon for the button
         self.setIcon(self.default_icon)

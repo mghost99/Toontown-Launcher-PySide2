@@ -1,6 +1,12 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap, QBitmap
-from PyQt5.QtWidgets import QApplication, QSplashScreen, QProgressBar, QLabel, QDesktopWidget
+from PyQt5.QtWidgets import (
+    QApplication,
+    QSplashScreen,
+    QProgressBar,
+    QLabel,
+    QDesktopWidget,
+)
 import urllib
 import requests
 
@@ -13,7 +19,7 @@ class SplashScreen(QSplashScreen):
         self.progressBar = QProgressBar(self)
         self.progressBar.setGeometry(130, 200, 250, 25)
         self.progressBar.setAlignment(Qt.AlignCenter)
-        self.progressLabel = QLabel('Setting remote variables...', self)
+        self.progressLabel = QLabel("Setting remote variables...", self)
         self.progressLabel.setAlignment(Qt.AlignCenter)
         self.progressLabel.move(180, 180)
 
@@ -48,38 +54,38 @@ class SplashScreen(QSplashScreen):
             "ACCOUNT_SERVER",
             "PANDA_DOWNLOAD_URL",
             "PATCHER_BASE_URL_HEAVY_LIFTING",
-            "WEB_PAGE_LOGIN_RPC"
+            "WEB_PAGE_LOGIN_RPC",
         ]
         try:
-            with open('parameters.txt', 'r') as file:
+            with open("parameters.txt", "r") as file:
                 lines = file.readlines()
                 for line in lines:
-                    key, sep, value = line.partition('=')
-                    if key.strip() == 'PATCHER_BASE_URL' and sep:
+                    key, sep, value = line.partition("=")
+                    if key.strip() == "PATCHER_BASE_URL" and sep:
                         base_url = value.strip()
                         break
         except FileNotFoundError:
             print("parameters.txt file not found. Using default URL.")
-        if not base_url.endswith('/'):
-            base_url += '/'
+        if not base_url.endswith("/"):
+            base_url += "/"
         try:
-            remote_url = urllib.parse.urljoin(base_url, 'patcher.startshow')
+            remote_url = urllib.parse.urljoin(base_url, "patcher.startshow")
             response = requests.get(remote_url)
             if response.status_code == 200:
                 lines = response.text.splitlines()
                 for line in lines:
-                    line = line.split('#')[0].strip()
+                    line = line.split("#")[0].strip()
                     if line:
-                        key, sep, url = line.partition('=')
+                        key, sep, url = line.partition("=")
                         if sep:
                             urls[key.strip()] = url.strip()
-            remote_url_ver = urllib.parse.urljoin(base_url, 'patcher.ver')
+            remote_url_ver = urllib.parse.urljoin(base_url, "patcher.ver")
             response_ver = requests.get(remote_url_ver)
             if response_ver.status_code == 200:
                 lines = response_ver.text.splitlines()
                 for line in lines:
-                    line = line.split('#')[0].strip()
-                    key, sep, value = line.partition('=')
+                    line = line.split("#")[0].strip()
+                    key, sep, value = line.partition("=")
                     key = key.strip()
                     if key in variables_to_extract and sep:
                         urls[key] = value.strip()
@@ -88,5 +94,5 @@ class SplashScreen(QSplashScreen):
         except requests.exceptions.RequestException as e:
             print(f"Failed to fetch the remote file: {e}")
             QApplication.quit()
-        urls['BASE_URL'] = base_url
+        urls["BASE_URL"] = base_url
         return urls

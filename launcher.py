@@ -1,4 +1,3 @@
-
 import sys
 import os
 from PyQt5.QtWidgets import QApplication
@@ -18,7 +17,8 @@ def main():
     urls = splash.load_remote_urls()
     authenticator = Authenticator(urls, "", "")
     main_window = MainWindow(
-        launcher_urls=urls, game_launcher=None, authenticator=authenticator)
+        launcher_urls=urls, game_launcher=None, authenticator=authenticator
+    )
     game_launcher = GameLauncher(urls=urls, main_window=main_window)
     main_window.game_launcher = game_launcher
     splash.finish(main_window)

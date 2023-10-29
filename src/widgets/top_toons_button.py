@@ -18,11 +18,11 @@ class TopToons(QPushButton):
         self.url = url
 
         self.default_icon = QIcon("assets/buttons/COMMUNITY1U.png")
-        self.hover_icon = QIcon(
-            "assets/buttons/COMMUNITY1R.png")  # Rollover (Hover)
+        self.hover_icon = QIcon("assets/buttons/COMMUNITY1R.png")  # Rollover (Hover)
         self.pressed_icon = QIcon("assets/buttons/COMMUNITY1D.png")  # Down
         self.disabled_icon = QIcon(
-            "assets/buttons/COMMUNITY1G.png")  # Disabled (Greyed)
+            "assets/buttons/COMMUNITY1G.png"
+        )  # Disabled (Greyed)
 
         # Setting the icon for the button
         self.setIcon(self.default_icon)

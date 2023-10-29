@@ -16,14 +16,13 @@ class Authenticator(QThread):
         # self.urls['WEB_PAGE_LOGIN_RPC']
         endpoint = "https://sunrise.games/api/login/alt/"
         data = {
-            'username': self.username,
-            'password': self.password,
-            'serverType': "Final Toontown"
+            "username": self.username,
+            "password": self.password,
+            "serverType": "Final Toontown",
         }
-        webHeaders = {
-            'User-Agent': 'PyQt5 - Disney\'s Toontown Online Launcher'
-        }
+        webHeaders = {"User-Agent": "PyQt5 - Disney's Toontown Online Launcher"}
 
-        request = requests.post(endpoint, data=data,
-                                headers=webHeaders, timeout=10).json()
+        request = requests.post(
+            endpoint, data=data, headers=webHeaders, timeout=10
+        ).json()
         self.authentication_signal.emit(request)

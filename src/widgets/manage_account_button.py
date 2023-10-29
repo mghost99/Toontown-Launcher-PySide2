@@ -10,8 +10,7 @@ class ManageAccount(QPushButton):
         self.setFixedSize(104, 13)
         self.setGeometry(400, 218, 140, 18)
         self.default_icon = QIcon("assets/buttons/MANAGE_ACCT1U.png")
-        self.hover_icon = QIcon(
-            "assets/buttons/MANAGE_ACCT1D.png")  # Rollover (Hover)
+        self.hover_icon = QIcon("assets/buttons/MANAGE_ACCT1D.png")  # Rollover (Hover)
         self.pressed_icon = QIcon("assets/buttons/MANAGE_ACCT1D.png")  # Down
 
         # Setting the icon for the button

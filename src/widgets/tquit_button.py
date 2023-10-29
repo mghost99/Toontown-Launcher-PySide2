@@ -13,8 +13,7 @@ class TQuit(QPushButton):
         # Positioning the button
         self.move(710, 1)
         self.default_icon = QIcon("assets/buttons/TQUIT1U.png")
-        self.hover_icon = QIcon(
-            "assets/buttons/TQUIT1D.png")  # Rollover (Hover)
+        self.hover_icon = QIcon("assets/buttons/TQUIT1D.png")  # Rollover (Hover)
         self.pressed_icon = QIcon("assets/buttons/TQUIT1D.png")  # Down
 
         # Setting the icon for the button

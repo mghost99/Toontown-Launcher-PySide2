@@ -24,7 +24,7 @@ class GameLauncher(QObject):
     def prepare_command(self):
         system = platform.system()
         cwd = os.getcwd()
-        tt_exe = os.path.join(cwd, 'Toontown.exe')
+        tt_exe = os.path.join(cwd, "Toontown.exe")
         if system == "Linux":
             return ["wine", tt_exe]
         elif system == "Windows":

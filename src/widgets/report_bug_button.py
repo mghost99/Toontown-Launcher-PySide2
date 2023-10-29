@@ -18,11 +18,11 @@ class ReportBug(QPushButton):
         self.url = url
 
         self.default_icon = QIcon("assets/buttons/REPORTBUG1U.png")
-        self.hover_icon = QIcon(
-            "assets/buttons/REPORTBUG1R.png")  # Rollover (Hover)
+        self.hover_icon = QIcon("assets/buttons/REPORTBUG1R.png")  # Rollover (Hover)
         self.pressed_icon = QIcon("assets/buttons/REPORTBUG1D.png")  # Down
         self.disabled_icon = QIcon(
-            "assets/buttons/REPORTBUG1G.png")  # Disabled (Greyed)
+            "assets/buttons/REPORTBUG1G.png"
+        )  # Disabled (Greyed)
 
         # Setting the icon for the button
         self.setIcon(self.default_icon)

@@ -10,8 +10,7 @@ class ForgotPassword(QPushButton):
         self.setFixedSize(104, 13)
         self.setGeometry(508, 218, 140, 18)
         self.default_icon = QIcon("assets/buttons/FORGOT1U.png")
-        self.hover_icon = QIcon(
-            "assets/buttons/FORGOT1D.png")  # Rollover (Hover)
+        self.hover_icon = QIcon("assets/buttons/FORGOT1D.png")  # Rollover (Hover)
         self.pressed_icon = QIcon("assets/buttons/FORGOT1D.png")  # Down
 
         # Setting the icon for the button
