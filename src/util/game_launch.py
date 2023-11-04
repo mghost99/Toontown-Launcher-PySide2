@@ -15,8 +15,11 @@ class GameLauncher(QObject):
         self.main_window = main_window
 
     def launch_game(self):
+        '''
+        This method will launch the game - in our case Toontown.exe
+        '''
         cmd = self.prepare_command()
-        if cmd:
+        if cmd and cmd != None:
             self.main_window.showMinimized()
             game_process = subprocess.Popen(cmd)
             self.monitor_game_exit(game_process)
@@ -24,13 +27,13 @@ class GameLauncher(QObject):
     def prepare_command(self):
         system = platform.system()
         cwd = os.getcwd()
-        tt_exe = os.path.join(cwd, "Toontown.exe")
+        tt_ = os.path.join(cwd, "Toontown")
         if system == "Linux":
-            return ["wine", tt_exe]
+            return ["wine", tt_+".exe"]
         elif system == "Windows":
-            return [tt_exe]
+            return [tt_+".exe"]
         elif system == "Darwin":
-            return None  # TODO: Add command for macOS
+            return [tt_] # Should run an executable called "Toontown" on macOS
 
     def monitor_game_exit(self, process):
         while process.poll() is None:

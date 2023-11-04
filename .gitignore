@@ -27,3 +27,4 @@ sign/*
 errorCode
 *.log
 *.dat
+launcher.json

@@ -1,7 +1,8 @@
+import json
 import platform
 import subprocess
 from PyQt5.QtWidgets import QMainWindow, QLabel, QProgressBar, QDesktopWidget
-from PyQt5.QtCore import Qt, QTimer, pyqtSlot, QPoint
+from PyQt5.QtCore import Qt, QMetaObject, Q_ARG, QTimer, pyqtSlot, QPoint
 from PyQt5.QtGui import QPixmap, QColor, QFont
 from src.util.updater import Updater
 
@@ -26,13 +27,48 @@ from src.widgets import (
 
 import os
 
+class ConfigManager:
+    def __init__(self, config_file, default_config=None):
+        self.config_file = config_file
+        self.default_config = default_config or {}
+
+    def save_config(self, _data):
+        with open(self.config_file, 'w') as f:
+            json.dump(_data, f, indent=4)
+    
+    def load_config(self):
+        if os.path.exists(self.config_file):
+            print("Loading configuration...")
+            with open(self.config_file, 'r') as f:
+                return json.load(f)
+        else:
+            print("Configuration file not found, creating with default...")
+            self.save_config(self.default_config)
+            return self.default_config
+
+    def update_config(self, _key, _value):
+        config = self.load_config()
+        config[_key] = _value
+        self.save_config(config)
+    
+    def get_config_value(self, _key, default=None):
+        config = self.load_config()
+        return config.get(_key, default)
 
 class MainWindow(QMainWindow):
     def __init__(self, launcher_urls, game_launcher, authenticator):
         super().__init__()
+
+        # Configuration
+        self.config_file = "launcher.json"
+        self.default_config = {
+            'username': None
+        }
+        self.config_manager = ConfigManager(self.config_file, self.default_config)
         self.urls = launcher_urls if launcher_urls else {}
         self.game_launcher = game_launcher
         self.authenticator = authenticator
+        self.updater_already_ran = False
         self.winTitle = "Toontown Launcher"
         self.setWindowTitle(self.winTitle)
         self.setGeometry(100, 100, 750, 500)
@@ -57,7 +93,7 @@ class MainWindow(QMainWindow):
         self.m_drag = False
         self.m_DragPosition = QPoint()
         self.center()
-
+    
     def center(self):
         qr = self.frameGeometry()
         cp = QDesktopWidget().availableGeometry().center()
@@ -114,7 +150,9 @@ class MainWindow(QMainWindow):
         self.input_font.setPointSize(9)
         self.username_input = UserInput(self)
         self.username_input.setFont(self.input_font)
-        self.password_input = PassInput(self)
+        if self.config_manager:
+            self.username_input.setText(self.config_manager.get_config_value('username', 'placeholder'))
+        self.password_input = PassInput(self.on_play_button_clicked, self)
         self.password_input.setFont(self.input_font)
         self.forgot_password = ForgotPassword(
             self, url=self.urls.get("BUTTON_7", "http://example.com")
@@ -172,15 +210,17 @@ class MainWindow(QMainWindow):
         self.liprompt.show()
         self.progress_bar.hide()
 
-    @pyqtSlot(dict)
     def handle_authentication(self, response):
+        QMetaObject.invokeMethod(self, "update_authentication_status", Qt.QueuedConnection,
+                                 Q_ARG(dict, response))
+
+    @pyqtSlot(dict)
+    def update_authentication_status(self, response):
         if response["errorCode"] != 0:
-            self.info_label.setText(response["message"])
-            self.play_button.setEnabled(True)
+            self.info_text(response["message"], is_error=True)
         else:
             playToken = response["token"]
             os.environ["LOGIN_TOKEN"] = playToken
-            self.run_updater()
             self.launch_game()
         self.hide_progress_bar()
 
@@ -198,7 +238,7 @@ class MainWindow(QMainWindow):
         self.info_text("LOG IN")
         self.game_launcher.launch_game()
         self.play_button.setEnabled(True)
-
+    
     def on_play_button_clicked(self):
         username = self.username_input.text()
         password = self.password_input.text()
@@ -209,13 +249,16 @@ class MainWindow(QMainWindow):
             self.info_text("A password is required", is_error=True)
             return
 
+        self.config_manager.update_config('username', username)
         self.play_button.setEnabled(False)
         self.show_progress_bar()
+        if self.updater_already_ran == False:
+            self.run_updater() # Run the updater before authenticating to prevent expired tokens
+            self.updater_already_ran = True
         self.authenticator.urls = self.urls  # Update urls
         self.authenticator.username = username  # Update username
         self.authenticator.password = password  # Update password
-
-        self.authenticator.authentication_signal.connect(self.handle_authentication)
-        self.authenticator.start()  # This will trigger the run method in Authenticator
+        self.authenticator.callback = self.handle_authentication
+        self.authenticator.start()
 
         self.info_text("Authenticating...")
