@@ -218,6 +218,7 @@ class MainWindow(QMainWindow):
     def update_authentication_status(self, response):
         if response["errorCode"] != 0:
             self.info_text(response["message"], is_error=True)
+            self.play_button.setEnabled(False)
         else:
             playToken = response["token"]
             os.environ["LOGIN_TOKEN"] = playToken
