@@ -1,32 +1,31 @@
 import json
+import os
 import platform
 import subprocess
-from PySide6.QtWidgets import QMainWindow, QLabel, QProgressBar
-from PySide6.QtCore import Qt, QMetaObject, QTimer, QPoint, Signal
-from PySide6.QtGui import QPixmap, QColor, QFont, QGuiApplication
-from src.util.updater import Updater
-from src.util.updater import Updater
 
+from PySide6.QtCore import QMetaObject, QPoint, QTimer, Qt, Signal
+from PySide6.QtGui import QColor, QFont, QGuiApplication, QPixmap
+from PySide6.QtWidgets import QLabel, QMainWindow, QProgressBar
+
+from src.util.updater import Updater
 from src.widgets import (
-    TQuit,
-    TMin,
-    ReportBug,
-    Homepage,
-    PlayersGuide,
-    TopToons,
-    GraphicOptions,
-    Quit,
-    LiPrompt,
-    UserInput,
-    PassInput,
-    ForgotPassword,
-    ManageAccount,
     CreateAccount,
-    Play,
+    ForgotPassword,
     GameNews,
+    GraphicOptions,
+    Homepage,
+    LiPrompt,
+    ManageAccount,
+    PassInput,
+    Play,
+    PlayersGuide,
+    Quit,
+    ReportBug,
+    TMin,
+    TQuit,
+    TopToons,
+    UserInput,
 )
-
-import os
 
 
 class ConfigManager:

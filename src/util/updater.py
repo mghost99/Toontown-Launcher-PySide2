@@ -1,10 +1,12 @@
-import os
-import requests
 import bz2
 import hashlib
 import logging
+import os
 import platform
-from panda3d.core import Multifile, VirtualFileSystem, Filename
+
+import requests
+from panda3d.core import Filename, Multifile, VirtualFileSystem
+
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"

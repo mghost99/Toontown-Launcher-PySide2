@@ -1,5 +1,5 @@
-from PySide6.QtCore import QThread
 import requests
+from PySide6.QtCore import QThread
 
 
 class Authenticator(QThread):

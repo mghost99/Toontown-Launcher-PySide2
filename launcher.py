@@ -1,6 +1,11 @@
+import os
 import platform
 import sys
-import os
+
+from PySide6.QtWidgets import QApplication
+
+from src.util import Authenticator, GameLauncher, MainWindow, SplashScreen
+
 
 # os.environ['QT_DEBUG_PLUGINS'] = '1'
 os.environ["QT_SCALE_FACTOR"] = "1"
@@ -15,8 +20,6 @@ if platform.system == "Windows":
     ctypes.windll.shcore.SetProcessDpiAwareness(0)
     ctypes.windll.user32.SetProcessDPIAware()
 
-from PySide6.QtWidgets import QApplication
-from src.util import SplashScreen, Authenticator, GameLauncher, MainWindow
 
 
 def main():
