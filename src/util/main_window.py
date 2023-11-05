@@ -62,7 +62,8 @@ class MainWindow(QMainWindow):
 
     def __init__(self, launcher_urls, game_launcher, authenticator):
         super().__init__()
-        self.config_file = "launcher.json"
+        self.original_cwd = os.getcwd()
+        self.config_file = os.path.join(self.original_cwd, "launcher.json")
         self.default_config = {"username": None}
         self.config_manager = ConfigManager(self.config_file, self.default_config)
         self.urls = launcher_urls if launcher_urls else {}
