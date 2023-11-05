@@ -2,12 +2,12 @@ import os
 import platform
 import subprocess
 import time
-from PyQt5.QtCore import QObject, pyqtSignal
+from PySide6.QtCore import QObject, Signal
 
 
 class GameLauncher(QObject):
-    game_exit_signal = pyqtSignal(int, str)
-    game_closed_signal = pyqtSignal()
+    game_exit_signal = Signal(int, str)
+    game_closed_signal = Signal()
 
     def __init__(self, urls, main_window):
         super().__init__()

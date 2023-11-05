@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QThread
+from PySide6.QtCore import QThread
 import requests
 
 class Authenticator(QThread):
@@ -17,7 +17,7 @@ class Authenticator(QThread):
             "password": self.password,
             "serverType": "Final Toontown",
         }
-        webHeaders = {"User-Agent": "PyQt5 - Disney's Toontown Online Launcher"}
+        webHeaders = {"User-Agent": "PySide6 - Disney's Toontown Online Launcher"}
 
         try:
             response = requests.post(
@@ -25,6 +25,4 @@ class Authenticator(QThread):
             ).json()
         except Exception as e:
             response = {"errorCode": 1, "message": str(e)}
-
-        # Call the callback method with the response
         self.callback(response)

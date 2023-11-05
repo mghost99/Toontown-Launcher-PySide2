@@ -1,12 +1,12 @@
-from PyQt5.QtWidgets import QPushButton
-from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import Qt, QUrl, QSize
+from PySide6.QtWidgets import QPushButton
+from PySide6.QtGui import QIcon
+from PySide6.QtCore import Qt, QUrl, QSize
 import webbrowser
 
 
 class CreateAccount(QPushButton):
     def __init__(self, parent=None, url=None):
-        super(CreateAccount, self).__init__(parent)
+        super().__init__(parent)
         self.setFixedSize(104, 13)
         self.setGeometry(628, 217, 140, 18)
         self.default_icon = QIcon("assets/buttons/CREATEPW1U.png")
@@ -27,14 +27,14 @@ class CreateAccount(QPushButton):
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             self.setIcon(self.pressed_icon)
-        super(CreateAccount, self).mousePressEvent(event)
+        super().mousePressEvent(event)
 
     def mouseReleaseEvent(self, event):
         self.setIcon(self.hover_icon)
-        super(CreateAccount, self).mouseReleaseEvent(event)
+        super().mouseReleaseEvent(event)
 
     def setEnabled(self, enabled):
-        super(CreateAccount, self).setEnabled(enabled)
+        super().setEnabled(enabled)
         if not enabled:
             self.setIcon(self.disabled_icon)
         else:

@@ -1,9 +1,10 @@
 import json
 import platform
 import subprocess
-from PyQt5.QtWidgets import QMainWindow, QLabel, QProgressBar, QDesktopWidget
-from PyQt5.QtCore import Qt, QMetaObject, Q_ARG, QTimer, pyqtSlot, QPoint
-from PyQt5.QtGui import QPixmap, QColor, QFont
+from PySide6.QtWidgets import QMainWindow, QLabel, QProgressBar
+from PySide6.QtCore import Qt, QMetaObject, QTimer, QPoint, Signal
+from PySide6.QtGui import QPixmap, QColor, QFont, QGuiApplication
+from src.util.updater import Updater
 from src.util.updater import Updater
 
 from src.widgets import (
@@ -56,10 +57,9 @@ class ConfigManager:
         return config.get(_key, default)
 
 class MainWindow(QMainWindow):
+    auth_signal = Signal(dict)
     def __init__(self, launcher_urls, game_launcher, authenticator):
         super().__init__()
-
-        # Configuration
         self.config_file = "launcher.json"
         self.default_config = {
             'username': None
@@ -68,6 +68,7 @@ class MainWindow(QMainWindow):
         self.urls = launcher_urls if launcher_urls else {}
         self.game_launcher = game_launcher
         self.authenticator = authenticator
+        self.auth_signal.connect(self.update_authentication_status)
         self.updater_already_ran = False
         self.winTitle = "Toontown Launcher"
         self.setWindowTitle(self.winTitle)
@@ -96,7 +97,7 @@ class MainWindow(QMainWindow):
     
     def center(self):
         qr = self.frameGeometry()
-        cp = QDesktopWidget().availableGeometry().center()
+        cp = QGuiApplication.primaryScreen().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
@@ -211,10 +212,11 @@ class MainWindow(QMainWindow):
         self.progress_bar.hide()
 
     def handle_authentication(self, response):
-        QMetaObject.invokeMethod(self, "update_authentication_status", Qt.QueuedConnection,
-                                 Q_ARG(dict, response))
+        self.auth_signal.emit(response)
 
-    @pyqtSlot(dict)
+
+    from PySide6.QtCore import Slot
+    @Slot(dict)
     def update_authentication_status(self, response):
         if response["errorCode"] != 0:
             self.info_text(response["message"], is_error=True)
@@ -254,11 +256,11 @@ class MainWindow(QMainWindow):
         self.play_button.setEnabled(False)
         self.show_progress_bar()
         if self.updater_already_ran == False:
-            self.run_updater() # Run the updater before authenticating to prevent expired tokens
+            self.run_updater()
             self.updater_already_ran = True
-        self.authenticator.urls = self.urls  # Update urls
-        self.authenticator.username = username  # Update username
-        self.authenticator.password = password  # Update password
+        self.authenticator.urls = self.urls
+        self.authenticator.username = username
+        self.authenticator.password = password
         self.authenticator.callback = self.handle_authentication
         self.authenticator.start()
 
