@@ -15,11 +15,15 @@ logging.basicConfig(
 
 class Updater:
     def __init__(
-        self, base_url, save_directory=".", progress_bar=None, status_label=None
+        self, base_url, save_directory="./game/", progress_bar=None, status_label=None
     ):
         self.base_url = base_url
         self.version_info_file = "patcher.ver"
         self.save_directory = save_directory
+        if not self.save_directory.endswith(os.sep):
+            self.save_directory += os.sep
+        if not os.path.isdir(self.save_directory):
+            os.mkdir(self.save_directory)
         self.env_vars = [
             "GAME_WHITELIST_URL",
             "GAME_IN_GAME_NEWS_URL",
@@ -63,20 +67,18 @@ class Updater:
                 md5_hash.update(chunk)
         return md5_hash.hexdigest() == expected_hash
 
-    def extract_multifile(self, multifile_path, extract_to_directory):
+    def extract_multifile(self, multifile_path, extract_to):
         vfs = VirtualFileSystem.getGlobalPtr()
         multifile = Multifile()
-        multifile.openRead(Filename.fromOsSpecific(multifile_path))
+        multifile.openRead(Filename.fromOsSpecific(os.path.join(self.save_directory, multifile_path)))
         for i in range(multifile.getNumSubfiles()):
             subfile_name = multifile.getSubfileName(i)
-            if platform.system() == "Linux" and subfile_name in [
-                "libpandadx8.dll",
-                "libpandadx9.dll",
-            ]:
+            if platform.system() == "Linux" and subfile_name in ["libpandadx8.dll", "libpandadx9.dll"]:
                 continue
             else:
-                print(f"Extracting: {subfile_name}")
-                multifile.extractSubfile(i, Filename(subfile_name))
+                target_path = os.path.join(extract_to, subfile_name)
+                print(f"Extracting: {subfile_name} to {target_path}")
+                multifile.extractSubfile(i, Filename.fromOsSpecific(target_path))
 
     def download_and_extract_files(self, content_lines):
         total_files = len(
@@ -119,7 +121,7 @@ class Updater:
                             expected_size, expected_hash = size_and_hash.split(" ")
 
                             expected_size = int(expected_size)
-                            decompressed_file_path = os.path.join(f"{file_name}")
+                            decompressed_file_path = os.path.join(self.save_directory, f"{file_name}")
                             if self.verify_file_hash(
                                 decompressed_file_path, expected_hash, expected_size
                             ):
@@ -132,7 +134,7 @@ class Updater:
                         self.update_status_label(f"Updating files {current_file}/13")
                         if response.status_code == 200:
                             logging.info(f"Downloading file: {file_name}.{version}.bz2")
-                            file_path = os.path.join(f"{file_name}.{version}.bz2")
+                            file_path = os.path.join(self.save_directory, f"{file_name}.{version}.bz2")
                             with open(file_path, "wb") as file:
                                 downloaded_size = 0
                                 for data in response.iter_content(chunk_size=4096):
@@ -143,12 +145,14 @@ class Updater:
                                     )
                             with bz2.open(file_path, "rb") as f:
                                 decompressed_content = f.read()
-                            decompressed_file_path = os.path.join(f"{file_name}")
+                            decompressed_file_path = os.path.join(self.save_directory, f"{file_name}")
                             with open(decompressed_file_path, "wb") as f:
                                 f.write(decompressed_content)
                                 logging.info(f"Decompressed file: {file_name}")
-                                if file_name in ["phase_1.mf", "phase_2.mf"]:
-                                    self.extract_multifile(f"{file_name}", ".")
+                                phase_1 = "phase_1.mf"
+                                phase_2 = "phase_2.mf"
+                                if file_name in [phase_1, phase_2]:
+                                    self.extract_multifile(f"{file_name}", self.save_directory)
                             os.remove(file_path)
                             logging.info(
                                 f"Removed compressed file: {file_name}.{version}.bz2"
@@ -160,7 +164,7 @@ class Updater:
         content_lines = self.fetch_version_info()
         self.set_environment_variables(content_lines)
         self.download_and_extract_files(content_lines)
-        hash_data = os.path.join(os.getcwd(), "hash_data")
+        hash_data = os.path.join(self.save_directory + "hash_data")
         if os.path.exists(hash_data):
             if os.path.isfile(hash_data):
                 os.remove(hash_data)

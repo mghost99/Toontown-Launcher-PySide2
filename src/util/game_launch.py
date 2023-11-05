@@ -14,6 +14,7 @@ class GameLauncher(QObject):
         super().__init__()
         self.urls = urls
         self.main_window = main_window
+        self.original_cwd = os.getcwd()
 
     def launch_game(self):
         """
@@ -22,19 +23,22 @@ class GameLauncher(QObject):
         cmd = self.prepare_command()
         if cmd and cmd != None:
             self.main_window.showMinimized()
+            game_dir = os.path.join(self.original_cwd, "game")
+            if not os.path.isdir(game_dir):
+                print(f"The directory {game_dir} does not exist.")
+                return
+            os.chdir(game_dir)
             game_process = subprocess.Popen(cmd)
             self.monitor_game_exit(game_process)
 
     def prepare_command(self):
         system = platform.system()
-        cwd = os.getcwd()
-        tt_ = os.path.join(cwd, "Toontown")
         if system == "Linux":
-            return ["wine", tt_ + ".exe"]
+            return ["wine", "Toontown.exe"]
         elif system == "Windows":
-            return [tt_ + ".exe"]
+            return ["Toontown.exe"]
         elif system == "Darwin":
-            return [tt_]  # Should run an executable called "Toontown" on macOS
+            return ["./Toontown"]  # Assuming "Toontown" is an executable script or binary
 
     def monitor_game_exit(self, process):
         while process.poll() is None:
