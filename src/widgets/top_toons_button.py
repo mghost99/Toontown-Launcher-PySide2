@@ -13,9 +13,7 @@ class TopToons(QPushButton):
         self.default_icon = QIcon("assets/buttons/COMMUNITY1U.png")
         self.hover_icon = QIcon("assets/buttons/COMMUNITY1R.png")
         self.pressed_icon = QIcon("assets/buttons/COMMUNITY1D.png")
-        self.disabled_icon = QIcon(
-            "assets/buttons/COMMUNITY1G.png"
-        )
+        self.disabled_icon = QIcon("assets/buttons/COMMUNITY1G.png")
         self.setIcon(self.default_icon)
         self.setIconSize(QSize(122, 38))
         self.clicked.connect(self.open_url)

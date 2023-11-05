@@ -1,8 +1,8 @@
 from PySide6.QtCore import QThread
 import requests
 
-class Authenticator(QThread):
 
+class Authenticator(QThread):
     def __init__(self, urls, username="", password="", callback=None):
         super().__init__()
         self.urls = urls

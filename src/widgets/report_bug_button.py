@@ -13,9 +13,7 @@ class ReportBug(QPushButton):
         self.default_icon = QIcon("assets/buttons/REPORTBUG1U.png")
         self.hover_icon = QIcon("assets/buttons/REPORTBUG1R.png")
         self.pressed_icon = QIcon("assets/buttons/REPORTBUG1D.png")
-        self.disabled_icon = QIcon(
-            "assets/buttons/REPORTBUG1G.png"
-        )
+        self.disabled_icon = QIcon("assets/buttons/REPORTBUG1G.png")
         self.setIcon(self.default_icon)
         self.setIconSize(QSize(122, 38))
         self.clicked.connect(self.open_url)

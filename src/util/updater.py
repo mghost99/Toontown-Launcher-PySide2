@@ -158,7 +158,7 @@ class Updater:
         content_lines = self.fetch_version_info()
         self.set_environment_variables(content_lines)
         self.download_and_extract_files(content_lines)
-        hash_data = os.path.join(os.getcwd(), 'hash_data')
+        hash_data = os.path.join(os.getcwd(), "hash_data")
         if os.path.exists(hash_data):
             if os.path.isfile(hash_data):
                 os.remove(hash_data)
@@ -166,7 +166,9 @@ class Updater:
                 logging.info("Removed hash_data file and created an empty directory.")
         else:
             os.mkdir(hash_data)
-            logging.info("hash_data file or folder not found; creating empty directory.")
+            logging.info(
+                "hash_data file or folder not found; creating empty directory."
+            )
         self.update_status_label("Files are up to date.")
 
     def fetch_version_info(self):

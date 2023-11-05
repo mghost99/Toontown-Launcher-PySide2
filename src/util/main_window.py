@@ -28,19 +28,20 @@ from src.widgets import (
 
 import os
 
+
 class ConfigManager:
     def __init__(self, config_file, default_config=None):
         self.config_file = config_file
         self.default_config = default_config or {}
 
     def save_config(self, _data):
-        with open(self.config_file, 'w') as f:
+        with open(self.config_file, "w") as f:
             json.dump(_data, f, indent=4)
-    
+
     def load_config(self):
         if os.path.exists(self.config_file):
             print("Loading configuration...")
-            with open(self.config_file, 'r') as f:
+            with open(self.config_file, "r") as f:
                 return json.load(f)
         else:
             print("Configuration file not found, creating with default...")
@@ -51,19 +52,19 @@ class ConfigManager:
         config = self.load_config()
         config[_key] = _value
         self.save_config(config)
-    
+
     def get_config_value(self, _key, default=None):
         config = self.load_config()
         return config.get(_key, default)
 
+
 class MainWindow(QMainWindow):
     auth_signal = Signal(dict)
+
     def __init__(self, launcher_urls, game_launcher, authenticator):
         super().__init__()
         self.config_file = "launcher.json"
-        self.default_config = {
-            'username': None
-        }
+        self.default_config = {"username": None}
         self.config_manager = ConfigManager(self.config_file, self.default_config)
         self.urls = launcher_urls if launcher_urls else {}
         self.game_launcher = game_launcher
@@ -94,7 +95,7 @@ class MainWindow(QMainWindow):
         self.m_drag = False
         self.m_DragPosition = QPoint()
         self.center()
-    
+
     def center(self):
         qr = self.frameGeometry()
         cp = QGuiApplication.primaryScreen().availableGeometry().center()
@@ -152,7 +153,9 @@ class MainWindow(QMainWindow):
         self.username_input = UserInput(self)
         self.username_input.setFont(self.input_font)
         if self.config_manager:
-            self.username_input.setText(self.config_manager.get_config_value('username', 'placeholder'))
+            self.username_input.setText(
+                self.config_manager.get_config_value("username", "placeholder")
+            )
         self.password_input = PassInput(self.on_play_button_clicked, self)
         self.password_input.setFont(self.input_font)
         self.forgot_password = ForgotPassword(
@@ -214,8 +217,8 @@ class MainWindow(QMainWindow):
     def handle_authentication(self, response):
         self.auth_signal.emit(response)
 
-
     from PySide6.QtCore import Slot
+
     @Slot(dict)
     def update_authentication_status(self, response):
         if response["errorCode"] != 0:
@@ -241,7 +244,7 @@ class MainWindow(QMainWindow):
         self.info_text("LOG IN")
         self.game_launcher.launch_game()
         self.play_button.setEnabled(True)
-    
+
     def on_play_button_clicked(self):
         username = self.username_input.text()
         password = self.password_input.text()
@@ -252,7 +255,7 @@ class MainWindow(QMainWindow):
             self.info_text("A password is required", is_error=True)
             return
 
-        self.config_manager.update_config('username', username)
+        self.config_manager.update_config("username", username)
         self.play_button.setEnabled(False)
         self.show_progress_bar()
         if self.updater_already_ran == False:

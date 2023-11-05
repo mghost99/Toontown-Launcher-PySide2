@@ -8,6 +8,7 @@ from PySide6.QtWidgets import (
 import requests
 from urllib.parse import urljoin
 
+
 class URLLoaderThread(QThread):
     progress_updated = Signal(int)
     finished = Signal(dict)
@@ -35,7 +36,9 @@ class URLLoaderThread(QThread):
                         if sep:
                             urls[key.strip()] = url.strip()
             else:
-                raise requests.exceptions.RequestException("Invalid response from server")
+                raise requests.exceptions.RequestException(
+                    "Invalid response from server"
+                )
 
             progress += 50
             self.progress_updated.emit(progress)
@@ -51,7 +54,9 @@ class URLLoaderThread(QThread):
                     if key in self.variables_to_extract and sep:
                         urls[key] = value.strip()
             else:
-                raise requests.exceptions.RequestException("Invalid response from server")
+                raise requests.exceptions.RequestException(
+                    "Invalid response from server"
+                )
 
             progress += 50
             self.progress_updated.emit(progress)
@@ -61,6 +66,7 @@ class URLLoaderThread(QThread):
 
         except requests.exceptions.RequestException as e:
             self.error_occurred.emit(str(e))
+
 
 class SplashScreen(QSplashScreen):
     def __init__(self):
