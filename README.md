@@ -5,14 +5,14 @@ This launcher is utilizing the Sunrise Games patcher files. As the ``WEB_PAGE_LO
 
 # Branches
 -- main - Fully working (`Windows`, `Linux`, `MacOS?`)
-- Features -
+--- Features ---
 * Logging in
 * Updating
 * Game launching
 * Two GUI options
 * Log files
 
-- Fixes -
+--- Fixes ---
 * Now no longer core dumps when updating.
 * Window now prevents itself from being maximized when minimized (prevents a ``Not Responding`` issue)
 * The Game News area is now fixed, it no longer goes white.
