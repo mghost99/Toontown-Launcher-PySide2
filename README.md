@@ -5,6 +5,7 @@ This launcher is utilizing the Sunrise Games patcher files. As the ``WEB_PAGE_LO
 
 # Branches
 -- main - Fully working (`Windows`, `Linux`, `MacOS?`)
+
 --- Features ---
 * Logging in
 * Updating
