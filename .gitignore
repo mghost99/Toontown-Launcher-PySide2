@@ -30,3 +30,4 @@ errorCode
 launcher.json
 build/*
 setup.py
+venv/

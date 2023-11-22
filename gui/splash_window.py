@@ -1,9 +1,9 @@
 from urllib.parse import urljoin
 
 import requests
-from PySide6.QtCore import QThread, Qt, Signal, Slot
-from PySide6.QtGui import QBitmap, QGuiApplication, QPixmap
-from PySide6.QtWidgets import QLabel, QProgressBar, QSplashScreen
+from PySide2.QtCore import QThread, Qt, Signal, Slot
+from PySide2.QtGui import QBitmap, QGuiApplication, QPixmap
+from PySide2.QtWidgets import QLabel, QProgressBar, QSplashScreen
 
 
 class URLLoaderThread(QThread):

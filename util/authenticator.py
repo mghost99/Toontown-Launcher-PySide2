@@ -2,7 +2,7 @@ import json
 from urllib.parse import urlencode
 import requests
 import http.client
-from PySide6.QtCore import QThread, Signal
+from PySide2.QtCore import QThread, Signal
 
 
 class Authenticator(QThread):
@@ -17,7 +17,7 @@ class Authenticator(QThread):
         self.connection = http.client.HTTPSConnection("sunrise.games", 443)
         headers = {
             "Content-type": "application/x-www-form-urlencoded",
-            "User-Agent": "PySide6 - Disney's Toontown Online Launcher"}
+            "User-Agent": "PySide2 - Disney's Toontown Online Launcher"}
         username, password = self.credentials
         params = urlencode({
             "username": username.encode("utf-8"),

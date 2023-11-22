@@ -1,17 +1,16 @@
 import bz2
 import hashlib
-import logging
+import json
 import os
 import platform
 import threading
+import time
 
 import requests
 from panda3d.core import Filename, Multifile, VirtualFileSystem
-from PySide6.QtCore import QObject, Signal, Slot, QThread
+from PySide2.QtCore import QObject, Signal, Slot, QThread
 
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
+import logging
 
 class Updater(QObject):
     update_progress_signal = Signal(int)
@@ -20,13 +19,15 @@ class Updater(QObject):
     finished = Signal()
     should_stop = False
     def __init__(
-        self, base_url, save_directory="./game/"
+        self, base_url, save_directory=""
     ):
         super().__init__()
         self.update_thread = None
         self.base_url = base_url
         self.version_info_file = "patcher.ver"
         self.save_directory = save_directory
+        if save_directory == "":
+            self.save_directory = os.path.join(os.getcwd(), "game")
         if not self.save_directory.endswith(os.sep):
             self.save_directory += os.sep
         if not os.path.isdir(self.save_directory):
@@ -39,6 +40,8 @@ class Updater(QObject):
             "PANDA_DOWNLOAD_URL",
             "PATCHER_BASE_URL_HEAVY_LIFTING",
         ]
+        self.file_dict = {}
+        self.files_already_updated = False
 
     def set_environment_variables(self, content_lines):
         for line in content_lines:
@@ -54,14 +57,6 @@ class Updater(QObject):
                         f"Failed to set environment variable: {key} = {value}. Error: {e}"
                     )
 
-    def verify_file_hash(self, file_path, expected_hash, expected_size):
-        if not os.path.exists(file_path) or os.path.getsize(file_path) != expected_size:
-            return False
-        md5_hash = hashlib.md5()
-        with open(file_path, "rb") as file:
-            for chunk in iter(lambda: file.read(4096), b""):
-                md5_hash.update(chunk)
-        return md5_hash.hexdigest() == expected_hash
 
     def extract_multifile(self, multifile_path, extract_to):
         vfs = VirtualFileSystem.getGlobalPtr()
@@ -73,99 +68,128 @@ class Updater(QObject):
                 continue
             else:
                 target_path = os.path.join(extract_to, subfile_name)
-                print(f"Extracting: {subfile_name} to {target_path}")
+                logging.info(f"Extracting: {subfile_name} to {target_path}")
                 multifile.extractSubfile(i, Filename.fromOsSpecific(target_path))
-
-    def download_and_extract_files(self, content_lines):
-        total_files = len(
-            [
-                line
-                for line in content_lines
-                if line.startswith("REQUIRED_INSTALL_FILES")
-            ]
-        )
-        current_file = 0
+    
+    def store_file_data(self, content_lines):
         for line in content_lines:
             if line.startswith("REQUIRED_INSTALL_FILES"):
                 files_info = line.split("=")[1].split()
                 for file_info in files_info:
-                    file_name, file_type = file_info.split(":")
-                    if "OSX" in file_name and platform.system() != "Darwin":
+                    if "OSX" in file_info and platform.system() != "Darwin":
                         continue
-                    if "LINUX" in file_name and platform.system() != "Linux":
+                    if "LINUX" in file_info and platform.system() != "Linux":
                         continue
-                    current_file += 1
-                    version_key = f"FILE_{file_name}.current"
-                    version_line = next(
-                        (l for l in content_lines if l.startswith(version_key)), None
-                    )
+                    decomp_file_name, file_type = file_info.split(":")
+                    if file_type == "3":
+                        extract_mf = True
+                    if file_type == "2":
+                        extract_mf = False
+
+                    version_key = f"FILE_{decomp_file_name}.current"
+                    version_line = next((l for l in content_lines if l.startswith(version_key)), None)
                     if version_line:
                         version = version_line.split("=")[1]
                         file_url = os.path.join(
-                            self.base_url, f"{file_name}.{version}.bz2"
-                        )
+                            self.base_url, f"{decomp_file_name}.{version}.bz2")
                         file_hash_info = next(
-                            (
-                                l
-                                for l in content_lines
-                                if l.startswith(f"FILE_{file_name}.{version}")
-                            ),
-                            None,
-                        )
+                            (l for l in content_lines if l.startswith(f"FILE_{decomp_file_name}.{version}")), None)
                         if file_hash_info:
-                            _, size_and_hash = file_hash_info.split("=")
-                            expected_size, expected_hash = size_and_hash.split(" ")
-
+                            _, size_hash = file_hash_info.split("=")
+                            expected_size, expected_hash = size_hash.split(" ")
                             expected_size = int(expected_size)
-                            decompressed_file_path = os.path.join(self.save_directory, f"{file_name}")
-                            if self.verify_file_hash(
-                                decompressed_file_path, expected_hash, expected_size
-                            ):
-                                logging.info(
-                                    f"File {file_name} already exists and has the correct hash."
-                                )
-                                continue
-                        response = requests.get(file_url, stream=True)
-                        total_size = int(response.headers.get("content-length", 0))
-                        self.update_status_signal.emit(f"Updating files {current_file}/{total_files}")
-                        if response.status_code == 200:
-                            logging.info(f"Downloading file: {file_name}.{version}.bz2")
-                            file_path = os.path.join(self.save_directory, f"{file_name}.{version}.bz2")
-                            with open(file_path, "wb") as file:
-                                downloaded_size = 0
-                                for data in response.iter_content(chunk_size=4096):
-                                    downloaded_size += len(data)
-                                    file.write(data)
-                                    self.update_progress_signal.emit(int(downloaded_size * 100 / total_size))
-                            with bz2.open(file_path, "rb") as f:
-                                decompressed_content = f.read()
-                            decompressed_file_path = os.path.join(self.save_directory, f"{file_name}")
-                            with open(decompressed_file_path, "wb") as f:
-                                f.write(decompressed_content)
-                                logging.info(f"Decompressed file: {file_name}")
-                                phase_1 = "phase_1.mf"
-                                phase_2 = "phase_2.mf"
-                                if file_name in [phase_1, phase_2]:
-                                    self.extract_multifile(f"{file_name}", self.save_directory)
-                            os.remove(file_path)
-                            logging.info(
-                                f"Removed compressed file: {file_name}.{version}.bz2"
-                            )
-                        else:
-                            self.update_status_error_signal.emit(f"Failed to download {file_name}")
+                        
+                    self.file_dict[decomp_file_name] = {
+                        "version": version,
+                        "url": file_url,
+                        "size": expected_size,
+                        "hash": expected_hash,
+                        "extract_mf": extract_mf
+                    }
 
-    @Slot()
-    def start_update(self):
-        update_thread = threading.Thread(target=self.update)
-        update_thread.start()
+    def is_up_to_date(self, file):
+        # check if file exists
+        file_path = os.path.join(self.save_directory, file)
+        if not os.path.exists(file_path):
+            logging.info(f"File {file} does not exist.")
+            return False
+        # check if file is the correct size
+        if os.path.getsize(file_path) != self.file_dict[file]['size']:
+            logging.info(f"File {file} does not have the correct size.")
+            return False
+        # check if file hash matches
+        md5_hash = hashlib.md5()
+        with open(file_path, "rb") as f:
+            for chunk in iter(lambda: f.read(4096), b""):
+                md5_hash.update(chunk)
+        if md5_hash.hexdigest() != self.file_dict[file]['hash']:
+            logging.info(f"File {file} does not have the correct hash.")
+            return False
+        return True
+
+
+    def download_and_extract_file(self, file_name):
+        logging.info(f"Downloading: {file_name}")
+        version = self.file_dict[file_name]['version']
+        url = self.file_dict[file_name]['url']
+        extract_mf = self.file_dict[file_name]['extract_mf']
+        response = requests.get(url, stream=True)
+        total_size = int(response.headers.get("content-length", 0))
+        bz2_path = os.path.join(self.save_directory, f"{file_name}.{version}.bz2")
+        if response.status_code == 200:
+            with open(bz2_path, "wb") as file:
+                for data in response.iter_content(chunk_size=4096):
+                    self.update_progress_signal.emit(file.tell() / total_size * 100)
+                    file.write(data)
+            logging.info(f"GET - {url} {response.status_code}")      
+            with bz2.open(bz2_path, "rb") as f:
+                decompressed_content = f.read()
+            decompressed_file_path = os.path.join(self.save_directory, f"{file_name}")
+            with open(decompressed_file_path, "wb") as f:
+                f.write(decompressed_content)
+            if extract_mf:
+                self.extract_multifile(f"{file_name}", self.save_directory)
+            # remove bz2 file
+            os.remove(bz2_path)
+            logging.info(f"Removed compressed file: {file_name}.{version}.bz2")
+        else:
+            logging.error(f"GET(FAIL) - {url} {response.status_code}")
+            return
+
+    def do_update(self):
+        logging.info("Starting updater...")
+        current_file = 0
+        total_files = len(self.file_dict.keys())
+        logging.info(f"Total files to update: {total_files}")
+        try:
+            if not self.files_already_updated:
+                for file_info in self.file_dict.keys():
+                    current_file += 1
+                    time.sleep(1)
+                    self.update_progress_signal.emit(0)
+                    if self.is_up_to_date(file_info):
+                        self.update_status_signal.emit(f"{file_info} is already up to date.")
+                        self.update_progress_signal.emit(100)
+                        logging.info(f"{file_info} is already up to date.")
+                    else:
+                        self.update_status_signal.emit(f"Updating files {current_file}/{total_files}")
+                        self.download_and_extract_file(file_info)
+                        time.sleep(1)
+        except Exception as e:
+            logging.error(f"An error occurred during the update process: {e}")
+            self.update_status_error_signal.emit(f"An error occurred during the update process.")
+            # we want to set to files to up to date if no errors occurred
+        else:
+            self.update_status_signal.emit("Files are up to date.")
+            self.files_already_updated = True
+            time.sleep(3)
 
     @Slot()
     def update(self):
         try:
             if not self.should_stop:
-                content_lines = self.fetch_version_info()
-                self.set_environment_variables(content_lines)
-                self.download_and_extract_files(content_lines)
+                self.fetch_version_info()
+                self.do_update()
                 self.cleanup()
             self.update_status_signal.emit("Have fun playing Toontown!")
         except Exception as e:
@@ -182,10 +206,11 @@ class Updater(QObject):
         response = requests.get(self.base_url + self.version_info_file)
         if response.status_code == 200:
             logging.info("Successfully fetched version info.")
-            return response.text.splitlines()
+            content_lines = response.text.splitlines()
+            self.set_environment_variables(content_lines)
+            self.store_file_data(content_lines)
         else:
             logging.error("Failed to connect to the update server.")
-            return []
 
     def cleanup(self):
         hash_data = os.path.join(self.save_directory, "hash_data")
