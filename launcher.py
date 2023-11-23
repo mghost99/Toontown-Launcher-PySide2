@@ -1,6 +1,6 @@
 import datetime
-import resource
-resource.setrlimit(resource.RLIMIT_CORE, (resource.RLIM_INFINITY, resource.RLIM_INFINITY))
+#import resource
+#resource.setrlimit(resource.RLIMIT_CORE, (resource.RLIM_INFINITY, resource.RLIM_INFINITY))
 
 import os
 import platform
